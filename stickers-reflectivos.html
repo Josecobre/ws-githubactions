@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReflexShield — Stickers Reflectivos para Placas</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chakra+Petch:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080a0e;
+    --surface: #0d1117;
+    --surface2: #141922;
+    --accent: #c8ff00;
+    --accent2: #00f0ff;
+    --silver: #c0c8d8;
+    --text: #e8edf5;
+    --muted: #6b7a94;
+    --border: rgba(200,255,0,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Chakra Petch', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(8,10,14,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-shadow: 0 0 20px rgba(200,255,0,0.5);
+  }
+  .logo span { color: var(--silver); }
+  nav ul { display: flex; gap: 2rem; list-style: none; }
+  nav a {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  nav a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: #000 !important;
+    padding: .45rem 1.2rem;
+    font-weight: 700 !important;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: background .2s, transform .2s !important;
+  }
+  .nav-cta:hover { background: var(--accent2) !important; transform: scale(1.04); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    position: relative;
+    padding: 8rem 3rem 4rem;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    max-width: 1200px;
+    width: 100%;
+    align-items: center;
+  }
+
+  /* Background geometric lines */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(transparent 49.5%, rgba(200,255,0,0.04) 49.5%, rgba(200,255,0,0.04) 50.5%, transparent 50.5%),
+      linear-gradient(90deg, transparent 49.5%, rgba(0,240,255,0.04) 49.5%, rgba(0,240,255,0.04) 50.5%, transparent 50.5%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border: 1px solid rgba(200,255,0,0.3);
+    display: inline-block;
+    padding: .35rem .8rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp .6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp .7s ease .1s both;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    -webkit-text-stroke: 0px;
+    text-shadow: 0 0 40px rgba(200,255,0,0.4);
+  }
+  .hero h1 .outline {
+    -webkit-text-stroke: 1px rgba(200,255,0,0.5);
+    color: transparent;
+  }
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    max-width: 460px;
+    animation: fadeUp .7s ease .2s both;
+  }
+  .hero-desc strong { color: var(--text); }
+  .btn-group {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp .7s ease .3s both;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: .9rem 2.2rem;
+    border: none;
+    cursor: pointer;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all .2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,240,255,0.3); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: .9rem 2.2rem;
+    border: 1px solid rgba(200,255,0,0.3);
+    cursor: pointer;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all .2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── PLATE DEMO ── */
+  .plate-demo {
+    position: relative;
+    animation: fadeUp .8s ease .15s both;
+  }
+  .plate-visual {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+  .plate-frame {
+    background: linear-gradient(135deg, #1a1f2e, #0d1117);
+    border: 2px solid rgba(200,255,0,0.2);
+    border-radius: 8px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .plate-frame::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(200,255,0,0.04));
+  }
+  .plate-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  /* BEFORE plate */
+  .plate {
+    background: #f5f0e8;
+    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    border: 3px solid #1a237e;
+    margin-bottom: .5rem;
+    position: relative;
+  }
+  .plate-char {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #111;
+    line-height: 1;
+    position: relative;
+    transition: all .4s;
+  }
+  .plate-dash {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2.8rem;
+    color: #555;
+    line-height: 1;
+  }
+
+  /* STICKER overlay effect */
+  .sticker-applied .plate-char {
+    color: transparent !important;
+  }
+  .sticker-applied .plate-char::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(
+      135deg,
+      #888 0%, #fff 15%, #aaa 25%, #fff 35%, #ccc 45%,
+      #fff 55%, #bbb 65%, #fff 75%, #999 85%, #eee 100%
+    );
+    background-size: 200% 200%;
+    animation: shimmer 2s linear infinite;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 200%; }
+  }
+
+  /* Toggle demo */
+  .demo-controls {
+    display: flex; align-items: center; gap: 1rem; margin-top: 1.2rem;
+  }
+  .toggle-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .toggle {
+    appearance: none;
+    width: 52px; height: 28px;
+    background: var(--surface2);
+    border: 1px solid rgba(200,255,0,0.3);
+    border-radius: 14px;
+    cursor: pointer;
+    position: relative;
+    transition: background .3s;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 4px; left: 4px;
+    width: 18px; height: 18px;
+    background: var(--muted);
+    border-radius: 50%;
+    transition: all .3s;
+  }
+  .toggle:checked { background: rgba(200,255,0,0.2); border-color: var(--accent); }
+  .toggle:checked::after { left: 26px; background: var(--accent); box-shadow: 0 0 8px rgba(200,255,0,0.6); }
+
+  .result-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    padding: .3rem .8rem;
+    border-radius: 2px;
+    margin-left: auto;
+    transition: all .3s;
+  }
+  .badge-readable { background: rgba(255,60,60,0.15); color: #ff6b6b; border: 1px solid rgba(255,60,60,0.3); }
+  .badge-hidden { background: rgba(200,255,0,0.15); color: var(--accent); border: 1px solid rgba(200,255,0,0.3); }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 3rem;
+    animation: fadeUp .7s ease .4s both;
+  }
+  .stat {
+    background: var(--bg);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    display: block;
+  }
+  .stat-desc {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: .3rem;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .section {
+    padding: 7rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-header {
+    margin-bottom: 4rem;
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+  .section-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: .6rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+  .section-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .step {
+    background: var(--surface);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background .3s;
+  }
+  .step:hover { background: var(--surface2); }
+  .step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .step:hover::before { opacity: 1; }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    line-height: 1;
+    -webkit-text-stroke: 1px rgba(200,255,0,0.3);
+    color: transparent;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .step h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: .8rem;
+    color: var(--text);
+  }
+  .step p {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ── PRODUCTS ── */
+  .products {
+    padding: 7rem 3rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .products-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 4rem;
+  }
+  .product-card {
+    background: var(--bg);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s;
+    cursor: pointer;
+  }
+  .product-card:hover { background: #0a0c12; }
+  .product-card.featured {
+    grid-row: span 1;
+    border: 1px solid rgba(200,255,0,0.25);
+    position: relative;
+  }
+  .featured-badge {
+    position: absolute;
+    top: 1.2rem; right: 1.2rem;
+    background: var(--accent);
+    color: #000;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: .25rem .6rem;
+    text-transform: uppercase;
+    clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+  }
+  .product-visual {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-visual.v1 { background: linear-gradient(135deg, #0d1117, #1a1f2e); }
+  .product-visual.v2 { background: linear-gradient(135deg, #0a1008, #0d1a0d); }
+  .product-visual.v3 { background: linear-gradient(135deg, #0d0d1a, #1a1030); }
+
+  /* Sticker visualization in product card */
+  .sticker-preview {
+    display: flex; gap: 6px;
+  }
+  .sp-item {
+    width: 36px; height: 42px;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 1px 3px rgba(255,255,255,0.1);
+  }
+  .sp-item::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      120deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.7) 30%,
+      rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0.4) 100%
+    );
+    animation: shimmerCard 3s ease-in-out infinite;
+  }
+  @keyframes shimmerCard {
+    0%, 100% { opacity: 0.6; transform: skewX(-10deg) translateX(-20%); }
+    50% { opacity: 1; transform: skewX(-10deg) translateX(20%); }
+  }
+  .sp-item.silver { background: linear-gradient(135deg, #888, #fff, #999); }
+  .sp-item.gold { background: linear-gradient(135deg, #b8860b, #ffd700, #daa520); }
+  .sp-item.holo {
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #c77dff);
+    animation: holoShift 3s linear infinite;
+  }
+  @keyframes holoShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+
+  .product-info { padding: 1.8rem; }
+  .product-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    margin-bottom: .4rem;
+  }
+  .product-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+  .product-specs {
+    display: flex; flex-wrap: wrap; gap: .4rem;
+    margin-bottom: 1.5rem;
+  }
+  .spec-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    padding: .25rem .6rem;
+    background: var(--surface2);
+    border: 1px solid rgba(255,255,255,0.07);
+    color: var(--muted);
+  }
+  .product-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    color: var(--accent);
+  }
+  .product-price span {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-left: .3rem;
+    letter-spacing: 1px;
+  }
+  .btn-add {
+    background: transparent;
+    border: 1px solid rgba(200,255,0,0.4);
+    color: var(--accent);
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: all .2s;
+  }
+  .btn-add:hover { background: var(--accent); color: #000; }
+
+  /* ── TECH SPECS ── */
+  .tech-section {
+    padding: 7rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .spec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .spec-row {
+    display: flex;
+    background: var(--surface);
+    transition: background .2s;
+  }
+  .spec-row:hover { background: var(--surface2); }
+  .spec-key {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding: 1rem 1.2rem;
+    width: 45%;
+    border-right: 1px solid var(--border);
+  }
+  .spec-val {
+    font-size: 0.82rem;
+    color: var(--text);
+    padding: 1rem 1.2rem;
+    flex: 1;
+  }
+  .spec-val .highlight { color: var(--accent); font-weight: 600; }
+
+  /* Comparison chart */
+  .comparison {
+    padding: 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .comparison h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    color: var(--text);
+  }
+  .comp-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .comp-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+    width: 150px;
+    flex-shrink: 0;
+  }
+  .comp-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .comp-bar {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 1.2s ease;
+  }
+  .comp-pct {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    width: 40px;
+    text-align: right;
+  }
+
+  /* ── FAQ ── */
+  .faq-section {
+    padding: 7rem 3rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+  .faq-inner { max-width: 800px; margin: 0 auto; }
+  .faq-list { margin-top: 4rem; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 0;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    transition: color .2s;
+    user-select: none;
+    gap: 1rem;
+  }
+  .faq-q:hover { color: var(--accent); }
+  .faq-icon {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: transform .3s;
+    font-family: monospace;
+    line-height: 1;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--muted);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease, padding .3s;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.5rem; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    padding: 7rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .t-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 4rem;
+  }
+  .testimonial {
+    background: var(--surface);
+    padding: 2rem;
+    transition: background .2s;
+  }
+  .testimonial:hover { background: var(--surface2); }
+  .t-stars { color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 1rem; }
+  .t-text {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+  .t-author {
+    display: flex; align-items: center; gap: .8rem;
+  }
+  .t-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: #000;
+  }
+  .t-name { font-size: 0.8rem; font-weight: 600; }
+  .t-loc { font-size: 0.7rem; color: var(--muted); letter-spacing: 1px; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    padding: 5rem 3rem;
+    background: linear-gradient(135deg, rgba(200,255,0,0.08), rgba(0,240,255,0.05));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-banner::before {
+    content: 'REFLEXSHIELD';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18vw;
+    color: rgba(200,255,0,0.025);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 10px;
+  }
+  .cta-banner h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .cta-banner p {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+  .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .footer-links a {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* ── CART TOAST ── */
+  .cart-toast {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    background: var(--surface2);
+    border: 1px solid rgba(200,255,0,0.4);
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; gap: .8rem;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .4s cubic-bezier(.16,1,.3,1);
+    z-index: 999;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .cart-toast.show { transform: translateY(0); opacity: 1; }
+  .toast-icon { font-size: 1.2rem; }
+  .toast-text { font-size: 0.8rem; color: var(--text); }
+  .toast-text strong { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .steps { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr; }
+    .t-grid { grid-template-columns: 1fr; }
+    .tech-grid { grid-template-columns: 1fr; }
+    nav ul { display: none; }
+    nav { padding: 1rem 1.5rem; }
+    .section, .tech-section, .testimonials { padding: 4rem 1.5rem; }
+    .products, .faq-section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .stats-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Reflex<span>Shield</span></div>
+  <ul>
+    <li><a href="#como-funciona">Cómo funciona</a></li>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#tecnologia">Tecnología</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#productos" class="nav-cta">Comprar ahora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid" style="position:relative;z-index:1">
+    <div>
+      <span class="hero-tag">▶ Tecnología reflectiva grado-4</span>
+      <h1>Hace tu<br>placa<br><em>ilegible</em><br><span class="outline">al instante</span></h1>
+      <p class="hero-desc">
+        Stickers adhesivos de <strong>vinilo reflectivo premium</strong> diseñados para cubrir números y letras de placas de rodaje. Sin trazas, sin marcas, <strong>instalación en segundos</strong>.
+      </p>
+      <div class="btn-group">
+        <a href="#productos" class="btn-primary">Ver productos →</a>
+        <a href="#como-funciona" class="btn-outline">Cómo funciona</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-num">99%</span>
+          <div class="stat-desc">Ocultamiento</div>
+        </div>
+        <div class="stat">
+          <span class="stat-num">5s</span>
+          <div class="stat-desc">Instalación</div>
+        </div>
+        <div class="stat">
+          <span class="stat-num">IP68</span>
+          <div class="stat-desc">Resistencia</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLATE DEMO -->
+    <div class="plate-demo">
+      <div class="plate-visual">
+        <div class="plate-frame">
+          <div class="plate-label">// demo interactivo</div>
+
+          <!-- Without sticker -->
+          <div id="plateWithout" style="margin-bottom:.5rem">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:.5rem;text-transform:uppercase">Sin sticker</div>
+            <div class="plate">
+              <span class="plate-char">A</span>
+              <span class="plate-char">B</span>
+              <span class="plate-char">C</span>
+              <span class="plate-dash">-</span>
+              <span class="plate-char">1</span>
+              <span class="plate-char">2</span>
+              <span class="plate-char">3</span>
+            </div>
+          </div>
+
+          <!-- With sticker -->
+          <div id="plateWith">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:.5rem;text-transform:uppercase">Con sticker</div>
+            <div class="plate sticker-applied" id="demoPlate">
+              <span class="plate-char">A</span>
+              <span class="plate-char">B</span>
+              <span class="plate-char">C</span>
+              <span class="plate-dash">-</span>
+              <span class="plate-char">1</span>
+              <span class="plate-char">2</span>
+              <span class="plate-char">3</span>
+            </div>
+          </div>
+
+          <div class="demo-controls">
+            <span class="toggle-label">Activar sticker</span>
+            <input type="checkbox" class="toggle" id="stickerToggle" checked>
+            <span class="result-badge badge-hidden" id="resultBadge">ILEGIBLE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="como-funciona" class="section">
+  <div class="section-header">
+    <div>
+      <span class="section-tag">// proceso</span>
+      <h2 class="section-title">Cómo <em>funciona</em></h2>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">01</span>
+      <h3>Selecciona el formato</h3>
+      <p>Elige el tamaño según las dimensiones de los caracteres de tu placa. Disponemos de formatos para motos, autos y vehículos pesados.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">02</span>
+      <h3>Limpia la superficie</h3>
+      <p>Usa el paño incluido con alcohol isopropílico para desengrassar la placa. La adherencia del vinilo depende de una superficie limpia.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">03</span>
+      <h3>Aplica el sticker</h3>
+      <p>Despega el protector trasero y adhiere el sticker sobre cada carácter. El adhesivo de grado-4 garantiza fijación permanente sin burbujas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="productos" class="products">
+  <div class="products-inner">
+    <div class="section-header">
+      <div>
+        <span class="section-tag">// catálogo</span>
+        <h2 class="section-title">Nuestros <em>Productos</em></h2>
+      </div>
+    </div>
+    <div class="products-grid">
+
+      <!-- Product 1 -->
+      <div class="product-card featured" onclick="addToCart('ReflexShield Silver')">
+        <div class="featured-badge">Más vendido</div>
+        <div class="product-visual v1">
+          <div class="sticker-preview">
+            <div class="sp-item silver"></div>
+            <div class="sp-item silver" style="height:42px;margin-top:5px;"></div>
+            <div class="sp-item silver"></div>
+            <div class="sp-item silver" style="height:42px;margin-top:5px;"></div>
+            <div class="sp-item silver"></div>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">ReflexShield Silver</div>
+          <p class="product-desc">Vinilo reflectivo plateado grado-4. Crea un efecto espejo que anula la legibilidad en cualquier ángulo de visión.</p>
+          <div class="product-specs">
+            <span class="spec-tag">30×40mm / char</span>
+            <span class="spec-tag">Vinilo 3M</span>
+            <span class="spec-tag">Pack ×10</span>
+            <span class="spec-tag">Autoadhesivo</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">S/ 29.90 <span>/ pack</span></div>
+            <button class="btn-add">+ Agregar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card" onclick="addToCart('ReflexShield Gold')">
+        <div class="product-visual v2">
+          <div class="sticker-preview">
+            <div class="sp-item gold"></div>
+            <div class="sp-item gold" style="height:42px;margin-top:5px;"></div>
+            <div class="sp-item gold"></div>
+            <div class="sp-item gold" style="height:42px;margin-top:5px;"></div>
+            <div class="sp-item gold"></div>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">ReflexShield Gold</div>
+          <p class="product-desc">Acabado dorado reflectivo de alta visibilidad. Máxima saturación de luz para ocultamiento total incluso en fotos.</p>
+          <div class="product-specs">
+            <span class="spec-tag">30×40mm / char</span>
+            <span class="spec-tag">Vinilo Oracal</span>
+            <span class="spec-tag">Pack ×10</span>
+            <span class="spec-tag">UV-resist</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">S/ 34.90 <span>/ pack</span></div>
+            <button class="btn-add">+ Agregar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card" onclick="addToCart('ReflexShield Holo')">
+        <div class="product-visual v3">
+          <div class="sticker-preview">
+            <div class="sp-item holo"></div>
+            <div class="sp-item holo" style="height:42px;margin-top:5px;"></div>
+            <div class="sp-item holo"></div>
+            <div class="sp-item holo" style="height:42px;margin-top:5px;"></div>
+            <div class="sp-item holo"></div>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">ReflexShield Holo</div>
+          <p class="product-desc">Efecto holográfico arcoíris. Dispersa la luz en todas las frecuencias, imposibilitando el reconocimiento óptico y digital.</p>
+          <div class="product-specs">
+            <span class="spec-tag">30×40mm / char</span>
+            <span class="spec-tag">Vinilo holo</span>
+            <span class="spec-tag">Pack ×10</span>
+            <span class="spec-tag">Anti-OCR</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">S/ 44.90 <span>/ pack</span></div>
+            <button class="btn-add">+ Agregar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TECH SPECS -->
+<section id="tecnologia" class="tech-section">
+  <div class="section-header" style="margin-bottom:3rem">
+    <div>
+      <span class="section-tag">// especificaciones</span>
+      <h2 class="section-title">Tecnología <em>reflectiva</em></h2>
+    </div>
+  </div>
+
+  <div class="tech-grid">
+    <div class="spec-list">
+      <div class="spec-row">
+        <div class="spec-key">Material</div>
+        <div class="spec-val">Vinilo microprismático <span class="highlight">Grado-4</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Adhesivo</div>
+        <div class="spec-val">Acrílico presión-sensible <span class="highlight">permanente</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Grosor total</div>
+        <div class="spec-val"><span class="highlight">0.18 mm</span> (invisible al tacto)</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Temperatura</div>
+        <div class="spec-val">-40°C a <span class="highlight">+80°C</span></div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Resistencia UV</div>
+        <div class="spec-val"><span class="highlight">7+ años</span> sin degradación</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Resistencia agua</div>
+        <div class="spec-val">IP68 — sumersión completa</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Retroreflectividad</div>
+        <div class="spec-val"><span class="highlight">800 cd/lux/m²</span> mín.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Corte</div>
+        <div class="spec-val">Laser <span class="highlight">±0.1mm</span> precisión</div>
+      </div>
+    </div>
+
+    <div class="comparison">
+      <h3>Efectividad por escenario</h3>
+      <div class="comp-row">
+        <div class="comp-label">Fotografía diurna</div>
+        <div class="comp-bar-bg"><div class="comp-bar" style="width:95%"></div></div>
+        <div class="comp-pct">95%</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Flash nocturno</div>
+        <div class="comp-bar-bg"><div class="comp-bar" style="width:99%"></div></div>
+        <div class="comp-pct">99%</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Reconoc. OCR</div>
+        <div class="comp-bar-bg"><div class="comp-bar" style="width:97%"></div></div>
+        <div class="comp-pct">97%</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Cámara de velocidad</div>
+        <div class="comp-bar-bg"><div class="comp-bar" style="width:92%"></div></div>
+        <div class="comp-pct">92%</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Cámara ANPR</div>
+        <div class="comp-bar-bg"><div class="comp-bar" style="width:88%"></div></div>
+        <div class="comp-pct">88%</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Vista directa</div>
+        <div class="comp-bar-bg"><div class="comp-bar" style="width:99%"></div></div>
+        <div class="comp-pct">99%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-header" style="margin-bottom:0">
+    <div>
+      <span class="section-tag">// clientes</span>
+      <h2 class="section-title">Lo que dicen<br>nuestros <em>clientes</em></h2>
+    </div>
+  </div>
+  <div class="t-grid">
+    <div class="testimonial">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"Increíble. Lo apliqué en menos de un minuto y el resultado es exactamente lo que buscaba. La placa queda completamente irreconocible en fotos."</p>
+      <div class="t-author">
+        <div class="t-avatar">CR</div>
+        <div>
+          <div class="t-name">Carlos R.</div>
+          <div class="t-loc">Lima, PE</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">"Compré el paquete Holo para mi moto. La calidad del vinilo es excelente, no se despega ni con lluvia intensa. Totalmente recomendado."</p>
+      <div class="t-author">
+        <div class="t-avatar">MV</div>
+        <div>
+          <div class="t-name">Melissa V.</div>
+          <div class="t-loc">Arequipa, PE</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="t-stars">★★★★☆</div>
+      <p class="t-text">"El efecto plateado es muy convincente. De día funciona perfectamente, de noche con flash es aún mejor. Rápido despacho, llegó en 2 días."</p>
+      <div class="t-author">
+        <div class="t-avatar">JM</div>
+        <div>
+          <div class="t-name">Jorge M.</div>
+          <div class="t-loc">Trujillo, PE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-section">
+  <div class="faq-inner">
+    <div style="text-align:center;margin-bottom:0">
+      <span class="section-tag" style="display:block;text-align:center;margin-bottom:.6rem">// preguntas frecuentes</span>
+      <h2 class="section-title">FAQ</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Daña la placa original al retirarlo?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">El adhesivo está formulado para no dejar residuos en superficies metálicas pintadas. Al retirarlo con temperatura moderada (secador) no quedan marcas ni daña el acabado de la placa.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Funciona en cualquier tipo de placa?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">Sí. Disponemos de tamaños para placas de autos particulares, motocicletas y vehículos de carga. Si tu placa tiene un formato especial, contáctanos y hacemos un corte personalizado.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Cuánto tiempo dura el adhesivo?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">El vinilo microprismático tiene una vida útil garantizada de 7 años en condiciones normales de uso. La exposición constante a rayos UV intensos puede reducir ligeramente su retroreflectividad, pero no afecta la adhesión.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Qué tamaño debo pedir?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">El tamaño estándar de 30×40mm cubre la mayoría de caracteres de placas peruanas. Incluimos una guía de medición en cada paquete. También puedes enviarnos fotos y te asesoramos sin costo.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          ¿Hacen despacho a provincia?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">Sí, enviamos a todo el Perú vía Olva Courier y Shalom. El tiempo de entrega es de 2-4 días hábiles para Lima y 3-6 días para provincias. Ofrecemos seguimiento en tiempo real de tu pedido.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>¿Listo para <em style="color:var(--accent)">proteger</em> tu placa?</h2>
+  <p>Envío gratis en pedidos mayores a S/ 60. Stock limitado.</p>
+  <a href="#productos" class="btn-primary" style="font-size:.9rem;padding:1rem 2.5rem">Comprar ahora →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ReflexShield</div>
+  <div class="footer-links">
+    <a href="#">Términos de uso</a>
+    <a href="#">Política de privacidad</a>
+    <a href="#">Envíos y devoluciones</a>
+    <a href="#">Contacto</a>
+    <a href="#">WhatsApp</a>
+  </div>
+  <div class="footer-copy">© 2025 ReflexShield · Lima, Perú</div>
+</footer>
+
+<!-- CART TOAST -->
+<div class="cart-toast" id="cartToast">
+  <span class="toast-icon">✓</span>
+  <span class="toast-text"><strong id="toastProduct"></strong> agregado al carrito</span>
+</div>
+
+<script>
+  // Toggle sticker demo
+  const toggle = document.getElementById('stickerToggle');
+  const plate  = document.getElementById('demoPlate');
+  const badge  = document.getElementById('resultBadge');
+  toggle.addEventListener('change', () => {
+    if (toggle.checked) {
+      plate.classList.add('sticker-applied');
+      badge.className = 'result-badge badge-hidden';
+      badge.textContent = 'ILEGIBLE';
+    } else {
+      plate.classList.remove('sticker-applied');
+      badge.className = 'result-badge badge-readable';
+      badge.textContent = 'LEGIBLE';
+    }
+  });
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Add to cart
+  function addToCart(product) {
+    const toast = document.getElementById('cartToast');
+    document.getElementById('toastProduct').textContent = product;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // Intersection observer for bar animations
+  const bars = document.querySelectorAll('.comp-bar');
+  const widths = [];
+  bars.forEach(b => { widths.push(b.style.width); b.style.width = '0%'; });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        bars.forEach((b, i) => { setTimeout(() => b.style.width = widths[i], i * 100); });
+        obs.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  if (bars[0]) obs.observe(bars[0].closest('.comparison'));
+</script>
+</body>
+</html>
